@@ -1,0 +1,41 @@
+<% layout('layout/page') -%>
+<% block('title', "DSS") -%>
+
+<script src="/vendor/d3.js"></script>
+<script src="/vendor/d3.layout.js"></script>
+<script src="/vendor/FileSaver.min.js"></script>
+
+<script src="/js/decision_tree.js"></script>
+<script src="/js/tree_manager.js"></script>
+<script src="/js/form_creator.js"></script>
+<script>
+    showMainForm();
+    /******MAIN******/
+    var docEl = document.documentElement,
+            bodyEl = document.getElementsByTagName('body')[0];
+
+    var width = window.innerWidth || docEl.clientWidth || bodyEl.clientWidth,
+            height =  window.innerHeight|| docEl.clientHeight|| bodyEl.clientHeight;
+
+    var treeData = [
+        {
+            "name": "Top Node", "weight": 1,
+            "children": []
+        }
+    ];
+
+    var treeCreator = new TreeCreator(width, height, treeData);
+    treeCreator.renderTree();
+
+    function main() {
+        treeCreator.removeTree();
+        treeCreator = createTree();
+        treeCreator.renderTree();
+    }
+</script>
+
+<div id="toolbox">
+    <input type="file" id="hidden-file-upload">
+    <input id="upload-input" type="image" title="upload tree" src="/img/upload-icon.png" alt="upload tree" onclick="uploadTree()">
+    <input type="image" id="download-input" title="download tree" src="/img/download-icon.png" alt="download tree" onclick="downloadTree()">
+</div>
